@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NG_Core_Auth.Controllers
@@ -14,6 +15,7 @@ namespace NG_Core_Auth.Controllers
         };
 
         [HttpGet("[action]")]
+        [Authorize(Policy = "RequireLoggedIn")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();

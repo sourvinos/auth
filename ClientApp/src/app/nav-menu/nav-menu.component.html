@@ -6,7 +6,7 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <ul class="navbar-nav flex-grow-2">
-                <li class="nav-item">
+                <li class="nav-item" routerLinkActive="active">
                     <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
                 </li>
                 <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
@@ -18,14 +18,14 @@
                 <li class="nav-item" *ngIf="!(LoginStatus$ | async) as LoginStatus">
                     <a class="nav-link text-dark" *ngIf="LoginStatus" [routerLink]='["/register"]'>Register</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" [routerLink]='["/weather"]'>Weather</a>
+                </li>
                 <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
                     <a class="nav-link text-danger" *ngIf="(UserName$ | async) as UserName">{{UserName | uppercase}}</a>
                 </li>
                 <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
                     <a class="btn btn-primary text-white" (click)="onLogout()" *ngIf="LoginStatus">Logout</a>
-                </li>
-                <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
-                    <a class="nav-link text-dark" [routerLink]='["/weather"]'>Weather</a>
                 </li>
             </ul>
         </div>

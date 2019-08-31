@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 
 export class WeatherService {
 
-    private weatherData: any
+    private weatherData: any = [
+        { 'id': '1', 'description': 'Data 1' },
+        { 'id': '2', 'description': 'Data 2' }]
 
     constructor(private http: HttpClient) { }
 
     getWeatherData() {
-        this.weatherData = this.http.get<any>('https://localhost/api/weather/weatherforecast')
-
-        console.log(this.weatherData)
-
         return this.weatherData
+    }
+
+    getWeatherDataAPI() {
+        return this.http.get<any>('/api/weather/weatherforecasts')
     }
 
 }

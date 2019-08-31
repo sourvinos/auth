@@ -9,14 +9,17 @@ import { WeatherService } from '../services/weather.service';
 
 export class WeatherComponent implements OnInit {
 
-    private weather: any
+    private weatherData: any
 
     constructor(private weatherService: WeatherService) { }
 
     ngOnInit() {
+        console.log(this.weatherService.getWeatherData())
 
-        this.weather = this.weatherService.getWeatherData().subscribe((result: any) => console.log(result))
-
+        this.weatherService.getWeatherDataAPI().subscribe(result => {
+            console.log(result)
+            this.weatherData = result
+        })
     }
 
 }
