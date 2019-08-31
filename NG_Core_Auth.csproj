@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Sendgrid" Version="9.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\.git\COMMIT_EDITMSG" />
+    <None Remove="ClientApp\.git\HEAD" />
+    <None Remove="ClientApp\.git\config" />
+    <None Remove="ClientApp\.git\description" />
+    <None Remove="ClientApp\.git\index" />
+    <None Remove="ClientApp\.git\hooks\applypatch-msg.sample" />
+    <None Remove="ClientApp\.git\hooks\commit-msg.sample" />
+    <None Remove="ClientApp\.git\hooks\fsmonitor-watchman.sample" />
+    <None Remove="ClientApp\.git\hooks\post-update.sample" />
+    <None Remove="ClientApp\.git\hooks\pre-applypatch.sample" />
+    <None Remove="ClientApp\.git\hooks\pre-commit.sample" />
+    <None Remove="ClientApp\.git\hooks\pre-push.sample" />
+    <None Remove="ClientApp\.git\hooks\pre-rebase.sample" />
+    <None Remove="ClientApp\.git\hooks\pre-receive.sample" />
+    <None Remove="ClientApp\.git\hooks\prepare-commit-msg.sample" />
+    <None Remove="ClientApp\.git\hooks\update.sample" />
+    <None Remove="ClientApp\.git\info\exclude" />
+    <None Remove="ClientApp\.git\logs\HEAD" />
+    <None Remove="ClientApp\.git\logs\refs\heads\master" />
+    <None Remove="ClientApp\.git\objects\08\ae466ff0f683ed1e7f11133601195b4a362ccc" />
+    <None Remove="ClientApp\.git\objects\0f\3d9d8b9f8e1a938befbfea5ac8bc11494ea709" />
+    <None Remove="ClientApp\.git\objects\16\317897b1c50a3a71bc775a8d6429f2b4c6cf98" />
+    <None Remove="ClientApp\.git\objects\16\b3601511cf1f4ea296e7abc18ee5d8104cb5a8" />
+    <None Remove="ClientApp\.git\objects\19\0fd300b601e168a3d185dbfa2758ab73257479" />
+    <None Remove="ClientApp\.git\objects\29\8d6937277371df0caf29dc242403d5a79b1940" />
+    <None Remove="ClientApp\.git\objects\2c\3ba2995c8510c02ca812f90280146738f162cf" />
+    <None Remove="ClientApp\.git\objects\36\12073bc31cd4c1f5d6cbb00318521e9a61bd8a" />
+    <None Remove="ClientApp\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Data\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="Email\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Notifications\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\custom\" />
+    <Folder Include="ClientApp\src\app\_helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20190215024924_InitialCreate.cs" />
+  </ItemGroup>
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup> 
+     <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>
