@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -20,7 +20,7 @@ export class AccountService {
     // Constructor
     constructor(private http: HttpClient, private router: Router) { }
 
-    // Method
+    // Method - Register
     register(username: string, password: string, email: string) {
 
         return this.http.post<any>(this.baseUrlRegister, { username, password, email }).pipe(map(result => {
@@ -31,7 +31,7 @@ export class AccountService {
 
     }
 
-    // Method
+    // Helper: Called from jwt.interceptor.ts
     getNewRefreshToken(): Observable<any> {
 
         let username = localStorage.getItem('username');
@@ -56,7 +56,7 @@ export class AccountService {
 
     }
 
-    // Method
+    // Login
     login(username: string, password: string) {
 
         const grantType = "password";
@@ -79,7 +79,7 @@ export class AccountService {
         );
     }
 
-    // Method
+    // Logout
     logout() {
 
         this.loginStatus.next(false);
@@ -94,8 +94,8 @@ export class AccountService {
 
     }
 
-    // Method
-    checkLoginStatus(): boolean {
+    // Private
+    private checkLoginStatus(): boolean {
 
         var loginCookie = localStorage.getItem("loginStatus");
 

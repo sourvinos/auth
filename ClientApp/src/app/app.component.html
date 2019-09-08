@@ -1,4 +1,6 @@
 <body>
+  <p><strong>Logout in: {{ countdown }}</strong></p>
+  <button (click)="reset()" *ngIf="timedOut">Restart</button>
   <app-nav-menu></app-nav-menu>
   <router-outlet></router-outlet>
 </body>

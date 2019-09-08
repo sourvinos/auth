@@ -172,7 +172,7 @@ namespace NG_Core_Auth.Controllers
                 UserId = userId,
                 Value = Guid.NewGuid().ToString("N"),
                 CreatedDate = DateTime.UtcNow,
-                ExpiryTime = DateTime.UtcNow.AddMinutes(90)
+                ExpiryTime = DateTime.UtcNow.AddMinutes(30)
             };
         }
 
@@ -234,6 +234,7 @@ namespace NG_Core_Auth.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
 
                 return new UnauthorizedResult();
             }

@@ -17,13 +17,7 @@ export class LoginComponent implements OnInit {
     ErrorMessage: string;
     invalidLogin: boolean;
 
-
-    constructor(private acct: AccountService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private fb: FormBuilder,
-
-    ) { }
+    constructor(private acct: AccountService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) { }
 
     onSubmit() {
         let userlogin = this.insertForm.value;
@@ -66,7 +60,5 @@ export class LoginComponent implements OnInit {
         });
 
     }
-
-
 
 }

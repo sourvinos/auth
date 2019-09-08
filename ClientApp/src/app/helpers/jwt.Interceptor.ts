@@ -39,6 +39,14 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     // Private method
+    private attachTokenToRequest(request: HttpRequest<any>) {
+
+        var token = localStorage.getItem('jwt');
+        return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+
+    }
+
+    // Private method
     private handleError(errorResponse: HttpErrorResponse) {
 
         let errorMsg: string;
@@ -90,11 +98,4 @@ export class JwtInterceptor implements HttpInterceptor {
 
     }
 
-    // Private method
-    private attachTokenToRequest(request: HttpRequest<any>) {
-
-        var token = localStorage.getItem('jwt');
-        return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
-
-    }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AccountService } from './../services/account.service';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class WeatherComponent implements OnInit {
 
     private weatherData: any
 
-    constructor(private weatherService: WeatherService) { }
+    constructor(private weatherService: WeatherService, private accountService: AccountService) { }
 
     ngOnInit() {
         console.log(this.weatherService.getWeatherData())

@@ -13,6 +13,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from 'angular-datatables';
 import { AccessDeniedComponent } from './errors/access-denied/access-denied.component';
 import { JwtInterceptor } from './helpers/jwt.Interceptor';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'
+import { MomentModule } from 'angular2-moment'
 
 @NgModule({
     declarations: [
@@ -31,7 +33,9 @@ import { JwtInterceptor } from './helpers/jwt.Interceptor';
         ReactiveFormsModule,
         HttpClientModule,
         ModalModule.forRoot(),
-        DataTablesModule,
+        MomentModule,
+        NgIdleKeepaliveModule.forRoot(),
+        DataTablesModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

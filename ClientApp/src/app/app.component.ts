@@ -1,3 +1,4 @@
+import { TimerService } from './services/countdown.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,5 +8,13 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
+
     title = 'ClientApp';
+    countdown = 0
+
+    constructor(private timerService: TimerService) {
+        this.timerService.reset()
+        this.timerService.countdown.subscribe(data => { this.countdown = data })
+    }
+
 }
